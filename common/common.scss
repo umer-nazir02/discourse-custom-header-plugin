@@ -24,20 +24,12 @@
   justify-content: center;
 }
 
-/* Mobile Specific Logo Size */
-@media (max-width: 768px) {
-  .logo img {
-    max-width: 150px; /* Reduce logo size on mobile */
-  }
-}
-
 .right-side {
   flex: 3; /* Right column for links and search bar */
   display: flex;
   flex-direction: column; /* Stack links and search bar */
   align-items: flex-start;
   width: 100%;
-  padding-left: 15px;
 }
 
 .links {
@@ -96,46 +88,30 @@
   background-color: #0056b3;
 }
 
-/* Mobile Specific Styles */
-@media (max-width: 768px) {
-  .header-container {
-    flex-direction: column; /* Stack logo, links, and search bar vertically */
+/* Hide the entire right-side when screen width is below 770px */
+@media (max-width: 770px) {
+  .right-side {
+    display: none;
   }
-
+  
+  /* Center the logo when right-side is hidden */
+  .header-container {
+    justify-content: center;
+  }
+  
   .left-side {
     width: 100%;
     justify-content: center;
-    margin-bottom: 10px;
   }
-
-  .right-side {
-    width: 100%;
-    padding: 0 10px;
+  
+  .logo {
+    margin-right: 0; /* Remove right margin when centered */
   }
+}
 
-  .nav {
-    flex-direction: column; /* Stack links vertically on mobile */
-  }
-
-  .nav a {
-    width: 100%;
-    padding: 15px;
-    text-align: center;
-  }
-
-  .search-bar input,
-  .search-bar button {
-    width: 100%;
-    padding: 12px;
-    font-size: 14px;
-    height: 40px; /* Make search input and button same height */
-  }
-
-  .search-bar button {
-    background-color: #007bff;
-  }
-
-  .search-bar button:hover {
-    background-color: #0056b3;
+/* Keep other mobile styles for elements that might appear in other scenarios */
+@media (max-width: 768px) {
+  .logo img {
+    max-width: 120px; /* Slightly smaller logo on mobile */
   }
 }
