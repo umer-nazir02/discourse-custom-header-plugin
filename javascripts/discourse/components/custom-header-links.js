@@ -1,5 +1,6 @@
 import Component from "@glimmer/component";
 import { dasherize } from "@ember/string";
+import { action } from "@ember/object";
 
 export default class CustomHeaderLinks extends Component {
   get shouldShow() {
@@ -39,5 +40,16 @@ export default class CustomHeaderLinks extends Component {
 
       return result;
     }, []);
+  }
+
+  @action
+  searchHobbyDB() {
+    // Implement your search functionality here
+    // This is where your search logic would go
+    console.log("Search button clicked");
+    
+    // Example implementation - you would replace this with your actual search logic:
+    // const searchTerm = document.querySelector('.search-bar input').value;
+    // performSearch(searchTerm);
   }
 }
