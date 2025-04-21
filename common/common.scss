@@ -30,6 +30,7 @@
   flex-direction: column; /* Stack links and search bar */
   align-items: flex-start;
   width: 100%;
+  padding-left: 15px;
 }
 
 .links {
@@ -89,7 +90,7 @@
 }
 
 /* Hide the entire right-side when screen width is below 770px */
-@media (max-width: 770px) {
+@media (max-width: 768px) {
   .right-side {
     display: none;
   }
