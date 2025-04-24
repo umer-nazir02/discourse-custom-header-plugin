@@ -3,6 +3,7 @@ import { dasherize } from "@ember/string";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+// Added tracked variable to compute button text
 
 export default class CustomHeaderLinks extends Component {
   @service router;
@@ -74,10 +75,35 @@ export default class CustomHeaderLinks extends Component {
     
     if (searchValue) {
       if (this.activeTab) {
-        // When there's an active tab, open search in a new tab with the hobbydb URL
+        // When there's an active tab, open search in a new tab with specific URLs based on activeTab
         try {
           const encodedSearchValue = encodeURIComponent(searchValue);
-          const hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/subjects?filters[q][0]=${encodedSearchValue}`;
+          let hobbydbUrl;
+          
+          // Set URL based on active tab
+          switch (this.activeTab) {
+            case "Dashboard":
+              hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/catalog_items?filters[q][0]=${encodedSearchValue}`;
+              break;
+            case "Subjects":
+              hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/subjects?filters[q][0]=${encodedSearchValue}`;
+              break;
+            case "Market":
+              hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/collectibles/for_sale_search?filters[q][0]=${encodedSearchValue}`;
+              break;
+            case "Members":
+              hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/users?order[name]=collectible_count&order[sort]=desc&filters[q][0]=${encodedSearchValue}&page=1`;
+              break;
+            case "Local":
+              hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/local?filters[q][0]=${encodedSearchValue}`;
+              break;
+            case "Blog":
+              hobbydbUrl = `https://blog.hobbydb.com/?s=${encodedSearchValue}`;
+              break;
+            default:
+              // Default fallback if none of the specified tabs match
+              hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/subjects?filters[q][0]=${encodedSearchValue}`;
+          }
           
           // Open in a new tab
           window.open(hobbydbUrl, '_blank', 'noopener,noreferrer');
