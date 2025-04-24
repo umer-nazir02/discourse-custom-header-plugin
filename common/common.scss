@@ -127,20 +127,33 @@
   border-color: #d0d0d0;
 }
 
+/* Updated search button styling to match the image */
 .search-button {
-  padding: 8px 15px;
-  height: 40px;
-  background: #3f72c5;
+  padding: 10px 20px;
+  height: 46px;
+  background: #4f7fd1;
   color: white;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
   font-weight: normal;
-  margin-left: 5px;
+  margin-left: 10px;
   transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .search-button:hover {
-  background-color: #3f72c5;
+  background-color: #3f6abd;
+}
+
+/* Style for the search icon within the button */
+.search-button svg {
+  width: 16px;
+  height: 16px;
+  margin-left: 5px;
+  fill: currentColor;
 }
 
 .nav-pills {
