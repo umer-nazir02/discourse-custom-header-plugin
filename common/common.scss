@@ -1,119 +1,120 @@
 /* General Header Layout */
 .header-container {
   display: flex;
-  justify-content: space-between; /* Distribute space between logo and content */
+  justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* // flex: 1;  Left column for logo */
-.left-side {
-  display: flex;
-  justify-content: flex-start;
-}
+/* No logo or left-side container */
 
-.logo {
-  margin-right: 20px; /* Space between logo and content */
-}
-
-/* Logo styling adjustments */
-.logo img {
-  max-width: 150px; /* Set a maximum width to scale the logo */
-  height: auto; /* Maintain the aspect ratio */
-  align-items: center;
-  justify-content: center;
-}
-
+/* Right side with navigation and search */
 .right-side {
-  flex: 3; /* Right column for links and search bar */
+  flex: 3;
   display: flex;
-  flex-direction: column; /* Stack links and search bar */
+  flex-direction: column;
   align-items: flex-start;
   width: 100%;
   padding-left: 15px;
 }
 
-.links {
-  width: 100%;
-}
-
-.nav {
+/* Navigation styling */
+.custom-header-links {
   display: flex;
   list-style: none;
   padding: 0;
+  margin: 0 0 15px 0;
+  width: 100%;
+  border-bottom: 1px solid #f0f0f0;
 }
 
-.nav a {
-  padding: 10px;
+.custom-header-links li {
+  margin-right: 8px;
+}
+
+.custom-header-links a {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 16px;
+  color: #555;
+  font-weight: 500;
   text-decoration: none;
-  color: #007bff;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
 }
 
-.nav-pills {
+.custom-header-links a:hover {
+  color: #f6a623;
+}
+
+/* Active tab styling - similar to the image */
+.custom-header-links li.active a {
+  color: #f6a623;
+  border-bottom: 3px solid #f6a623;
+}
+
+/* First tab styling (Database Items in the image) */
+.custom-header-links li:first-child a {
+  font-weight: 600;
+}
+
+/* Search area styling */
+.search-actions {
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  gap: 0;
-  margin: 0px 0px 5px 0px;
-}
-
-.nav a:hover {
-  text-decoration: underline;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .search-bar {
-  display: flex;
-  gap: 10px;
-  width: 80%;
-  margin: 0px 0px 0px 10px;
+  flex: 1;
+  margin-right: 10px;
 }
 
 .search-bar input {
-  padding: 10px;
-  font-size: 16px;
   width: 100%;
-  height: 40px; /* Set input height */
-}
-
-.search-bar button {
   padding: 10px;
   font-size: 16px;
-  width: 40%;
-  height: 40px; /* Set button height */
-  background-color: #007bff;
-  color: white;
-  border: 1px solid transparent;
+  border: 1px solid #ddd;
   border-radius: 4px;
+  height: 40px;
 }
 
-.search-bar button:hover {
-  background-color: #0056b3;
+.search-button {
+  padding: 10px 15px;
+  height: 40px;
+  background-color: #f6a623;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 5px;
+  transition: background-color 0.2s ease;
 }
 
-/* Hide the entire right-side when screen width is below 770px */
+.search-button:hover {
+  background-color: #e59400;
+}
+
+/* Search indicator */
+.search-destination-indicator {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+/* No search filters */
+
+/* Responsive design */
 @media (max-width: 768px) {
   .right-side {
     display: none;
   }
   
-  /* Center the logo when right-side is hidden */
   .header-container {
     justify-content: center;
-  }
-  
-  .left-side {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .logo {
-    margin-right: 0; /* Remove right margin when centered */
-  }
-}
-
-/* Keep other mobile styles for elements that might appear in other scenarios */
-@media (max-width: 768px) {
-  .logo img {
-    max-width: 120px; /* Slightly smaller logo on mobile */
   }
 }

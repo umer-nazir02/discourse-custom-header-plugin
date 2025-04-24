@@ -7,7 +7,7 @@ import { tracked } from "@glimmer/tracking";
 export default class CustomHeaderLinks extends Component {
   @service router;
   @service search;
-  @tracked showSearchFilters = true;
+  @tracked activeTab = null;
 
   get shouldShow() {
     return settings.custom_header_links?.length > 0;
@@ -27,7 +27,8 @@ export default class CustomHeaderLinks extends Component {
         return result;
       }
 
-      const linkClass = `${dasherize(linkText)}-custom-header-links`; // legacy name
+      const linkClass = `${dasherize(linkText)}-custom-header-links`;
+      const isActive = this.activeTab === linkText;
 
       const anchorAttributes = {
         title: linkTitle,
@@ -36,16 +37,34 @@ export default class CustomHeaderLinks extends Component {
       };
 
       result.push({
-        device: `headerLink--${device}`,
-        hideOnScroll: `headerLink--${hideOnScroll}`,
-        locale: locale ? `headerLink--${locale}` : null,
+        device: device ? `headerLink--${device}` : "",
+        hideOnScroll: hideOnScroll ? "headerLink--hide-on-scroll" : "",
+        locale: locale ? `headerLink--${locale}` : "",
         linkClass,
         anchorAttributes,
         linkText,
+        isActive
       });
 
       return result;
     }, []);
+  }
+  
+  @action
+  toggleTab(tabName) {
+    // If the tab is already active, deactivate it
+    if (this.activeTab === tabName) {
+      this.activeTab = null;
+    } else {
+      // Otherwise, set it as active
+      this.activeTab = tabName;
+    }
+    return false; // Prevent default link behavior
+  }
+  
+  @action
+  handleSearch() {
+    this.searchForum();
   }
   
   @action
@@ -56,11 +75,17 @@ export default class CustomHeaderLinks extends Component {
     if (searchValue) {
       // Use Discourse's search service if available (preferred method)
       if (this.search && typeof this.search.query === "function") {
-        this.search.query(searchValue);
+        this.search.query(searchValue, {
+          // Add search context if there's an active tab
+          searchContext: this.activeTab ? { type: "category", name: this.activeTab } : null
+        });
       } else {
         // Fallback: Navigate to search page with the query
         this.router.transitionTo("full-page-search", {
-          queryParams: { q: searchValue }
+          queryParams: { 
+            q: searchValue,
+            context: this.activeTab ? this.activeTab.toLowerCase() : null
+          }
         });
       }
     } else {
@@ -80,8 +105,5 @@ export default class CustomHeaderLinks extends Component {
     }
   }
 
-  @action
-  toggleSearchOptions() {
-    this.showSearchFilters = !this.showSearchFilters;
-  }
+
 }
