@@ -1,5 +1,8 @@
 <div class="header-container">
   <div class="header-content">
+    <div class="mobile-logo">
+      <img src="{{theme-setting 'logo-url'}}" alt="Site Logo" />
+    </div>
     {{#if this.shouldShow}}
       <ul class="custom-header-links nav nav-pills">
         {{#each this.links as |link|}}
