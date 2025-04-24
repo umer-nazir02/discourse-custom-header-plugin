@@ -124,12 +124,23 @@
 
 .search-bar input:focus {
   outline: none;
-  border-color: #3f72c5;
+  border-color: #d0d0d0;
 }
 
-/* Hide the search button since it's not visible in the image */
 .search-button {
-  display: none;
+  padding: 8px 15px;
+  height: 40px;
+  background: #3f72c5;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: normal;
+  margin-left: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.search-button:hover {
+  background-color: #3f72c5;
 }
 
 .nav-pills {
