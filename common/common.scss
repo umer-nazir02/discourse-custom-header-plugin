@@ -372,6 +372,10 @@
 
 /* Hide the header-container on mobile devices */
 @media (max-width: 768px) {
+  .d-header {
+    height: 4em;
+  }
+  
   .header-container.no-border {
     display: none;
   }
