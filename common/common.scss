@@ -1,8 +1,7 @@
 /* General Header Layout */
 .header-container {
-  padding: 10px 20px;
+  padding: 0px 20px;
   background-color: #ffffff;
-  border-bottom: 1px solid #e6e6e6;
   display: flex;
   justify-content: center;
 }
@@ -20,7 +19,7 @@
   display: flex;
   list-style: none;
   padding: 0;
-  margin: 0 0 15px 0;
+  margin: 0 0 8px 0; /* Reduced spacing between links and search */
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
@@ -63,7 +62,7 @@
 .search-bar {
   display: flex;
   align-items: center;
-  max-width: 600px;
+  max-width: 500px; /* Decreased width */
   width: 100%;
 }
 
@@ -84,6 +83,7 @@
   border: none;
   cursor: pointer;
   font-weight: normal;
+  margin-left: 5px; /* Added spacing between input and button */
   transition: background-color 0.2s ease;
 }
 
