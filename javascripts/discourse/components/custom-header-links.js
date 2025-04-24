@@ -73,19 +73,36 @@ export default class CustomHeaderLinks extends Component {
     const searchValue = searchInput ? searchInput.value.trim() : "";
     
     if (searchValue) {
+      if (this.activeTab) {
+        // When there's an active tab, open search in a new tab with the hobbydb URL
+        try {
+          const encodedSearchValue = encodeURIComponent(searchValue);
+          const hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/subjects?filters[q][0]=${encodedSearchValue}`;
+          
+          // Open in a new tab
+          window.open(hobbydbUrl, '_blank', 'noopener,noreferrer');
+          
+          // Clear the search input after opening the new tab
+          if (searchInput) {
+            searchInput.value = '';
+          }
+          
+          // Return early to prevent default behavior
+          return;
+        } catch (error) {
+          console.error("Error opening HobbyDB search:", error);
+          // Fall through to default behavior if there's an error
+        }
+      }
+      
+      // No active tab or error occurred, use the original functionality
       // Use Discourse's search service if available (preferred method)
       if (this.search && typeof this.search.query === "function") {
-        this.search.query(searchValue, {
-          // Add search context if there's an active tab
-          searchContext: this.activeTab ? { type: "category", name: this.activeTab } : null
-        });
+        this.search.query(searchValue);
       } else {
         // Fallback: Navigate to search page with the query
         this.router.transitionTo("full-page-search", {
-          queryParams: { 
-            q: searchValue,
-            context: this.activeTab ? this.activeTab.toLowerCase() : null
-          }
+          queryParams: { q: searchValue }
         });
       }
     } else {
@@ -102,8 +119,8 @@ export default class CustomHeaderLinks extends Component {
       event.preventDefault();
       // Call the forum search function
       this.searchForum();
+      return false;
     }
+    return true;
   }
-
-
 }
