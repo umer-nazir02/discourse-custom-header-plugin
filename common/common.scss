@@ -75,6 +75,7 @@
   background-color: #f8f8f8;
   height: 40px;
   flex: 1;
+  margin-bottom: 0px;
 }
 
 .search-button {
@@ -91,6 +92,12 @@
 
 .search-button:hover {
   background-color: #e59400;
+}
+
+.nav-pills {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
 }
 
 /* Responsive design */
