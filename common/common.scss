@@ -131,61 +131,225 @@
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  gap: 0px; 
 }
 
-/* Responsive design */
+/* Add styles for header icons */
+.d-header-icons {
+  display: flex;
+  align-items: center;
+}
+
+.d-header-icons li {
+  margin-left: 10px;
+}
+
+.d-header-icons .btn {
+  padding: 5px;
+}
+
+/* Make the site logo responsive */
+#site-logo {
+  max-height: 40px;
+  width: auto;
+}
+
+/* Add basic responsive styles */
+@media (max-width: 1024px) {
+  .custom-header-links a {
+    padding: 10px 10px;
+    font-size: 15px;
+  }
+  
+  .search-bar {
+    max-width: 350px;
+  }
+}
+
+/* Tablet responsive styles */
 @media (max-width: 768px) {
+  /* Base header container */
   .header-container {
+    padding: 5px 10px;
+  }
+  
+  /* Make the header wrap structure mobile-friendly */
+  .d-header .wrap {
+    flex-direction: column;
+    width: 100%;
     padding: 0;
   }
   
+  .d-header .contents {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+  
+  /* Show mobile logo if needed */
   .mobile-logo {
-    display: block; /* Show on mobile */
+    display: block;
     width: 100%;
     margin-bottom: 5px;
   }
   
+  /* Adjust site logo size */
+  #site-logo {
+    max-height: 32px;
+  }
+  
+  /* Header panel adjustments */
+  .d-header .panel {
+    margin-left: auto;
+  }
+  
+  /* Make navigation scrollable horizontally on mobile */
   .header-content {
-    flex-direction: column;
-    align-items: center;
     width: 100%;
+    overflow: hidden;
   }
   
   .custom-header-links {
-    flex-direction: row;
-    justify-content: center;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    justify-content: flex-start;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
     width: 100%;
-    padding: 0 10px;
-    margin-bottom: 10px;
+    flex-wrap: nowrap;
+  }
+  
+  /* Hide scrollbar but allow scrolling */
+  .custom-header-links::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .custom-header-links {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
   
   .custom-header-links li {
-    margin: 0;
-    white-space: nowrap;
+    flex: 0 0 auto;
   }
   
   .custom-header-links a {
-    padding: 10px 8px;
+    padding: 8px 12px;
     font-size: 14px;
+    white-space: nowrap;
   }
   
+  /* Adjust search bar for mobile */
   .search-actions {
     width: 100%;
-    padding: 0 10px;
     justify-content: center;
+    margin-bottom: 5px;
   }
   
   .search-bar {
-    width: 100%;
     max-width: 100%;
+    width: 100%;
+  }
+  
+  .search-bar input {
+    height: 36px;
+  }
+  
+  .search-button {
+    height: 36px;
+    padding: 6px 12px;
+  }
+  
+  /* Make icons more touch-friendly */
+  .d-header-icons li {
+    margin-left: 6px;
+  }
+  
+  .d-header-icons .btn {
+    padding: 8px;
+  }
+  
+  /* Ensure hamburger menu is visible */
+  .hamburger-dropdown {
+    display: block !important;
   }
 }
 
 /* Small mobile screens */
 @media (max-width: 480px) {
+  /* Further optimize for small screens */
+  .d-header .contents {
+    padding: 0 5px;
+  }
+  
+  #site-logo {
+    max-height: 28px;
+  }
+  
   .custom-header-links a {
-    padding: 8px 6px;
+    padding: 6px 10px;
     font-size: 13px;
+  }
+  
+  /* Make search more compact */
+  .search-bar input {
+    height: 34px;
+    padding: 6px 10px;
+  }
+  
+  .search-button {
+    height: 34px;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  
+  /* Hide less important icons on very small screens */
+  .d-header-icons li:not(.hamburger-dropdown):not(.current-user) {
+    display: none;
+  }
+  
+  /* Keep avatar and hamburger visible */
+  .hamburger-dropdown, .current-user {
+    display: block !important;
+  }
+  
+  /* Make avatar smaller */
+  .avatar {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  
+  /* Add extra space for better touch targets */
+  .d-header-icons .btn {
+    padding: 6px;
+  }
+}
+
+/* Javascript-independent dropdown menu functionality */
+/* Since you can't modify HTML, we'll use CSS hover functionality */
+@media (max-width: 768px) {
+  /* Add JavaScript support for mobile menu dropdown */
+  body.mobile-menu-active .custom-header-links {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+  
+  body.mobile-menu-active .custom-header-links li {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #eee;
+  }
+  
+  body.mobile-menu-active .custom-header-links a {
+    display: block;
+    padding: 12px 15px;
+    width: 100%;
   }
 }
