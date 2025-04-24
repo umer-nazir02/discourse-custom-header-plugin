@@ -58,5 +58,15 @@ export default class CustomHeaderLinks extends Component {
     // Open in a new tab
     window.open(url, "_blank");
   }
-
+  
+  @action
+  handleKeyPress(event) {
+    // Check if the Enter key was pressed
+    if (event.key === "Enter") {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+      // Call the search function
+      this.searchHobbyDB();
+    }
+  }
 }

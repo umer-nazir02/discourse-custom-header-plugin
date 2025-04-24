@@ -29,7 +29,8 @@
     <input 
       type="text" 
       placeholder="Search" 
+      {{on "keypress" this.handleKeyPress}}
     />
-    <button type="button" {{action "searchHobbyDB"}}>Search</button>
+    <button type="button" {{on "click" this.searchHobbyDB}}>Search</button>
   </div>
 </div>
