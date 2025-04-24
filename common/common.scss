@@ -62,8 +62,10 @@
 .search-bar {
   display: flex;
   align-items: center;
-  max-width: 500px; /* Decreased width */
+  justify-content: center; /* Center the input and button */
+  max-width: 450px; /* Decreased width by 10% from 500px */
   width: 100%;
+  margin: 0 auto; /* Center the search bar container */
 }
 
 .search-bar input {
