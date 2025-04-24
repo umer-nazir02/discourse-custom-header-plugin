@@ -470,3 +470,10 @@
     height: 36px;
   }
 }
+
+/* Hide the header-container on mobile devices */
+@media (max-width: 768px) {
+  .header-container.no-border {
+    display: none;
+  }
+}
