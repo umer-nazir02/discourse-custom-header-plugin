@@ -4,6 +4,9 @@
   background-color: #ffffff;
   display: flex;
   justify-content: center;
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
 
 /* Mobile logo styling */
@@ -18,12 +21,21 @@
   width: auto;
 }
 
+.no-border {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .header-content {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Changed from center to flex-start to align from the same starting point */
+  align-items: flex-start;
   max-width: 1000px;
   width: 100%;
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
 
 /* Navigation styling */
