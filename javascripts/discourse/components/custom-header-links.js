@@ -82,7 +82,7 @@ export default class CustomHeaderLinks extends Component {
           
           // Set URL based on active tab
           switch (this.activeTab) {
-            case "Dashboard":
+            case "Database":
               hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/catalog_items?filters[q][0]=${encodedSearchValue}`;
               break;
             case "Subjects":
@@ -100,6 +100,17 @@ export default class CustomHeaderLinks extends Component {
             case "Blog":
               hobbydbUrl = `https://blog.hobbydb.com/?s=${encodedSearchValue}`;
               break;
+            case "Forum":
+              if (this.search && typeof this.search.query === "function") {
+                this.search.query(searchValue);
+              } else {
+                // Fallback: Navigate to search page with the query
+                this.router.transitionTo("full-page-search", {
+                  queryParams: { q: searchValue }
+                });
+              }
+              break;
+
             default:
               // Default fallback if none of the specified tabs match
               hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/subjects?filters[q][0]=${encodedSearchValue}`;
