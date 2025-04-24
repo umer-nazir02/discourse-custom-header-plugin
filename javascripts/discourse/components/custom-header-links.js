@@ -1,8 +1,14 @@
 import Component from "@glimmer/component";
 import { dasherize } from "@ember/string";
 import { action } from "@ember/object";
+import { inject as service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
 
 export default class CustomHeaderLinks extends Component {
+  @service router;
+  @service search;
+  @tracked showSearchFilters = true;
+
   get shouldShow() {
     return settings.custom_header_links?.length > 0;
   }
@@ -43,20 +49,24 @@ export default class CustomHeaderLinks extends Component {
   }
   
   @action
-  searchHobbyDB() {
+  searchForum() {
     const searchInput = document.querySelector(".search-bar input");
     const searchValue = searchInput ? searchInput.value.trim() : "";
     
-    let url = "https://www.hobbydb.com/marketplaces/hobbydb/catalog_items";
-    
     if (searchValue) {
-      // Encode the search term for the URL
-      const encodedSearch = encodeURIComponent(searchValue);
-      url = `${url}?filters[q][0]=${encodedSearch}`;
+      // Use Discourse's search service if available (preferred method)
+      if (this.search && typeof this.search.query === "function") {
+        this.search.query(searchValue);
+      } else {
+        // Fallback: Navigate to search page with the query
+        this.router.transitionTo("full-page-search", {
+          queryParams: { q: searchValue }
+        });
+      }
+    } else {
+      // If no search value, just navigate to search page
+      this.router.transitionTo("full-page-search");
     }
-    
-    // Open in a new tab
-    window.open(url, "_blank");
   }
   
   @action
@@ -65,8 +75,13 @@ export default class CustomHeaderLinks extends Component {
     if (event.key === "Enter") {
       // Prevent the default form submission behavior
       event.preventDefault();
-      // Call the search function
-      this.searchHobbyDB();
+      // Call the forum search function
+      this.searchForum();
     }
+  }
+
+  @action
+  toggleSearchOptions() {
+    this.showSearchFilters = !this.showSearchFilters;
   }
 }
