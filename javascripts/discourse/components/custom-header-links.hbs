@@ -1,56 +1,41 @@
 <div class="header-container">
-  <div class="right-side">
-    <div class="header-links-wrapper">
-      {{#if this.shouldShow}}
-        <ul class="custom-header-links nav nav-pills">
-          {{#each this.links as |link|}}
-            <li
-              class={{concat-class
-                "headerLink"
-                link.device
-                link.locale
-                link.linkClass
-                link.hideOnScroll
-                (if link.isActive "active")
-              }}
+  <div class="header-content">
+    {{#if this.shouldShow}}
+      <ul class="custom-header-links nav nav-pills">
+        {{#each this.links as |link|}}
+          <li
+            class={{concat-class
+              "headerLink"
+              link.device
+              link.locale
+              link.linkClass
+              link.hideOnScroll
+              (if link.isActive "active")
+            }}
+          >
+            <a
+              title={{link.anchorAttributes.title}}
+              href="javascript:void(0);" 
+              {{on "click" (fn this.toggleTab link.linkText)}}
             >
-              <a
-                title={{link.anchorAttributes.title}}
-                href="javascript:void(0);" 
-                {{on "click" (fn this.toggleTab link.linkText)}}
-              >
-                {{link.linkText}}
-              </a>
-            </li>
-          {{/each}}
-        </ul>
-      {{/if}}
-
-      <div class="search-actions">
-        <div class="search-bar">
-          <input 
-            type="text" 
-            placeholder="Search" 
-            {{on "keypress" this.handleKeyPress}}
-          />
-        </div>
-        
+              {{link.linkText}}
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
+    
+    <div class="search-actions">
+      <div class="search-bar">
+        <input 
+          type="text" 
+          placeholder="Search" 
+          {{on "keypress" this.handleKeyPress}}
+        />
         <button type="button" class="search-button" {{on "click" this.handleSearch}}>
-          Search {{d-icon "search"}}
+          Search
         </button>
       </div>
-      
-      {{#if this.activeTab}}
-        <div class="search-destination-indicator">
-          Searching: {{this.activeTab}}
-        </div>
-      {{else}}
-        <div class="search-destination-indicator">
-          Searching: Discourse Forum
-        </div>
-      {{/if}}
-      
-
     </div>
   </div>
 </div>

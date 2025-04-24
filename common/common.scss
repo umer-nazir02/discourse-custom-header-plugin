@@ -1,23 +1,18 @@
 /* General Header Layout */
 .header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 10px 20px;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #e6e6e6;
+  display: flex;
+  justify-content: center;
 }
 
-/* No logo or left-side container */
-
-/* Right side with navigation and search */
-.right-side {
-  flex: 3;
+.header-content {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  max-width: 1000px;
   width: 100%;
-  padding-left: 15px;
 }
 
 /* Navigation styling */
@@ -26,20 +21,21 @@
   list-style: none;
   padding: 0;
   margin: 0 0 15px 0;
+  justify-content: center;
+  flex-wrap: wrap;
   width: 100%;
-  border-bottom: 1px solid #f0f0f0;
 }
 
 .custom-header-links li {
-  margin-right: 8px;
+  margin: 0;
 }
 
 .custom-header-links a {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 10px 15px;
   font-size: 16px;
-  color: #555;
-  font-weight: 500;
+  color: #333;
+  font-weight: normal;
   text-decoration: none;
   transition: all 0.2s ease;
   border-bottom: 3px solid transparent;
@@ -49,49 +45,45 @@
   color: #f6a623;
 }
 
-/* Active tab styling - similar to the image */
+/* Active tab styling */
 .custom-header-links li.active a {
   color: #f6a623;
   border-bottom: 3px solid #f6a623;
 }
 
-/* First tab styling (Database Items in the image) */
-.custom-header-links li:first-child a {
-  font-weight: 600;
-}
-
 /* Search area styling */
 .search-actions {
   display: flex;
-  width: 100%;
   align-items: center;
+  width: 100%;
+  justify-content: center;
   margin-bottom: 10px;
 }
 
 .search-bar {
-  flex: 1;
-  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+  width: 100%;
 }
 
 .search-bar input {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  background-color: #f8f8f8;
   height: 40px;
+  flex: 1;
 }
 
 .search-button {
-  padding: 10px 15px;
+  padding: 8px 15px;
   height: 40px;
   background-color: #f6a623;
   color: white;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
-  font-weight: 500;
-  margin-left: 5px;
+  font-weight: normal;
   transition: background-color 0.2s ease;
 }
 
@@ -99,22 +91,20 @@
   background-color: #e59400;
 }
 
-/* Search indicator */
-.search-destination-indicator {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 15px;
-}
-
-/* No search filters */
-
 /* Responsive design */
 @media (max-width: 768px) {
-  .right-side {
-    display: none;
+  .custom-header-links {
+    flex-direction: column;
+    align-items: center;
   }
   
-  .header-container {
-    justify-content: center;
+  .custom-header-links li {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .search-bar {
+    width: 100%;
   }
 }
