@@ -9,7 +9,7 @@
 .header-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* Changed from center to flex-start to align from the same starting point */
   max-width: 1000px;
   width: 100%;
 }
@@ -20,7 +20,7 @@
   list-style: none;
   padding: 0;
   margin: 0 0 8px 0; /* Reduced spacing between links and search */
-  justify-content: center;
+  justify-content: flex-start; /* Changed from center to flex-start to align left */
   flex-wrap: wrap;
   width: 100%;
 }
@@ -50,22 +50,31 @@
   border-bottom: 3px solid #f6a623;
 }
 
+/* Make first tab start at the same position as the search bar */
+.custom-header-links li:first-child {
+  padding-left: 0;
+}
+
+.custom-header-links li:first-child a {
+  padding-left: 0;
+}
+
 /* Search area styling */
 .search-actions {
   display: flex;
   align-items: center;
   width: 100%;
-  justify-content: center;
+  justify-content: flex-start; /* Changed from center to flex-start */
   margin-bottom: 10px;
 }
 
 .search-bar {
   display: flex;
   align-items: center;
-  justify-content: center; /* Center the input and button */
-  max-width: 450px; /* Decreased width by 10% from 500px */
+  justify-content: flex-start; /* Changed from center to flex-start */
+  max-width: 450px;
   width: 100%;
-  margin: 0 auto; /* Center the search bar container */
+  margin: 0; /* Removed auto margin to prevent centering */
 }
 
 .search-bar input {
@@ -86,7 +95,7 @@
   border: none;
   cursor: pointer;
   font-weight: normal;
-  margin-left: 5px; /* Added spacing between input and button */
+  margin-left: 5px;
   transition: background-color 0.2s ease;
 }
 
@@ -104,13 +113,13 @@
 @media (max-width: 768px) {
   .custom-header-links {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
   
   .custom-header-links li {
     margin: 0;
     width: 100%;
-    text-align: center;
+    text-align: left;
   }
   
   .search-bar {
