@@ -47,16 +47,54 @@ export default class CustomHeaderLinks extends Component {
     const searchInput = document.querySelector(".search-bar input");
     const searchValue = searchInput ? searchInput.value.trim() : "";
     
-    let url = "https://www.hobbydb.com/marketplaces/hobbydb/catalog_items";
-    
     if (searchValue) {
-      // Encode the search term for the URL
-      const encodedSearch = encodeURIComponent(searchValue);
-      url = `${url}?filters[q][0]=${encodedSearch}`;
+      if (this.activeTab) {
+        // When there's an active tab, open search in a new tab with specific URLs based on activeTab
+        try {
+          const encodedSearchValue = encodeURIComponent(searchValue);
+          let hobbydbUrl;
+          
+          // Set URL based on active tab
+          switch (this.activeTab) {
+            case "Database":
+              hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/catalog_items?filters[q][0]=${encodedSearchValue}`;
+              break;
+            case "Subjects":
+              hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/subjects?filters[q][0]=${encodedSearchValue}`;
+              break;
+            case "Market":
+              hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/collectibles/for_sale_search?filters[q][0]=${encodedSearchValue}`;
+              break;
+            case "Members":
+              hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/users?order[name]=collectible_count&order[sort]=desc&filters[q][0]=${encodedSearchValue}&page=1`;
+              break;
+            case "Local":
+              hobbydbUrl = `https://www.hobbydb.com/marketplaces/hobbydb/local?filters[q][0]=${encodedSearchValue}`;
+              break;
+            case "Blog":
+              hobbydbUrl = `https://blog.hobbydb.com/?s=${encodedSearchValue}`;
+              break;
+            default:
+              break;
+          }
+          
+          // Open in a new tab
+          if (hobbydbUrl) {
+            window.open(hobbydbUrl, 'self', 'noopener,noreferrer');
+            
+            // Clear the search input after opening the new tab
+            if (searchInput) {
+              searchInput.value = '';
+            }
+          }
+          
+          // Return early to prevent default behavior
+          return;
+        } catch (error) {
+          console.error("Error opening HobbyDB search:", error);
+          // Fall through to default behavior if there's an error
+        }
+      } 
     }
-    
-    // Open in a new tab
-    window.open(url, "_blank");
   }
-
 }
