@@ -166,7 +166,7 @@ export default class CustomHeaderLinks extends Component {
           
           // Open in a new tab
           if (hobbydbUrl) {
-            window.open(hobbydbUrl, '', 'noopener,noreferrer');
+            window.open(hobbydbUrl, 'self', 'noopener,noreferrer');
             
             // Clear the search input after opening the new tab
             if (searchInput) {
