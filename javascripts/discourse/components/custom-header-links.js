@@ -47,7 +47,6 @@ export default class CustomHeaderLinks extends Component {
       const anchorAttributes = {
         title: linkTitle,
         href: linkHref,
-        target: target === "self" ? "" : "_blank",
       };
 
       result.push({
@@ -167,7 +166,7 @@ export default class CustomHeaderLinks extends Component {
           
           // Open in a new tab
           if (hobbydbUrl) {
-            window.open(hobbydbUrl, '_blank', 'noopener,noreferrer');
+            window.open(hobbydbUrl, '', 'noopener,noreferrer');
             
             // Clear the search input after opening the new tab
             if (searchInput) {
