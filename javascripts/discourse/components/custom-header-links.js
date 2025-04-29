@@ -1,10 +1,21 @@
 import Component from "@glimmer/component";
 import { dasherize } from "@ember/string";
 import { action } from "@ember/object";
+import { tracked } from "@glimmer/tracking";
 
 export default class CustomHeaderLinks extends Component {
+
+
+  @tracked activeTab = "Forum"; // Set "Forum" as the default active tab
+
   get shouldShow() {
     return settings.custom_header_links?.length > 0;
+  }
+
+  constructor() {
+    super(...arguments);
+    // Initialize - show custom search only when the active tab is not Forum
+    this.showCustomSearch = this.activeTab !== "Forum";
   }
 
   get links() {
@@ -113,4 +124,17 @@ export default class CustomHeaderLinks extends Component {
       } 
     }
   }
+
+  // @action
+  // handleKeyPress(event) {
+  //   // Check if the Enter key was pressed
+  //   if (event.key === "Enter") {
+  //     // Prevent the default form submission behavior
+  //     event.preventDefault();
+  //     // Call the forum search function
+  //     this.searchForum();
+  //     return false;
+  //   }
+  //   return true;
+  // }
 }

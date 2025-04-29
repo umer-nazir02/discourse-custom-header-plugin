@@ -14,12 +14,13 @@
           }}
         >
           <a
-            title={{link.anchorAttributes.title}}
-            href={{link.anchorAttributes.href}}
-            target={{link.anchorAttributes.target}}
-          >
-            {{link.linkText}}
-          </a>
+              title={{link.anchorAttributes.title}}
+              href="javascript:void(0);" 
+              {{on "click" (fn this.toggleTab link.linkText)}}
+              target={{link.anchorAttributes.target}}
+            >
+              {{link.linkText}}
+            </a>
         </li>
       {{/each}}
     </ul>
