@@ -41,6 +41,22 @@ export default class CustomHeaderLinks extends Component {
       return result;
     }, []);
   }
+
+  @action
+  toggleTab(tabName) {
+    // If the tab is already active, deactivate it
+    if (this.activeTab !== tabName) {
+      // Otherwise, set it as active
+      this.activeTab = tabName;
+      // Show custom search only when Forum tab is NOT active
+      this.showCustomSearch = tabName !== "Forum";
+    }
+    
+    // After toggling, manage the visibility of search bars
+    this._toggleSearchBars();
+    
+    return false; // Prevent default link behavior
+  }
   
   @action
   searchHobbyDB() {
@@ -80,7 +96,7 @@ export default class CustomHeaderLinks extends Component {
           
           // Open in a new tab
           if (hobbydbUrl) {
-            window.open(hobbydbUrl, 'self', 'noopener,noreferrer');
+            window.open(hobbydbUrl, '_blank', 'noopener,noreferrer');
             
             // Clear the search input after opening the new tab
             if (searchInput) {
