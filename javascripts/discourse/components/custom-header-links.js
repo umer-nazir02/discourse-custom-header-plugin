@@ -1,21 +1,17 @@
 import Component from "@glimmer/component";
 import { dasherize } from "@ember/string";
 import { action } from "@ember/object";
+import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
+// Added tracked variable to compute button text
 
 export default class CustomHeaderLinks extends Component {
-
-
+  @service router;
+  @service search;
   @tracked activeTab = "Forum"; // Set "Forum" as the default active tab
 
   get shouldShow() {
     return settings.custom_header_links?.length > 0;
-  }
-
-  constructor() {
-    super(...arguments);
-    // Initialize - show custom search only when the active tab is not Forum
-    this.showCustomSearch = this.activeTab !== "Forum";
   }
 
   get links() {
@@ -32,7 +28,8 @@ export default class CustomHeaderLinks extends Component {
         return result;
       }
 
-      const linkClass = `${dasherize(linkText)}-custom-header-links`; // legacy name
+      const linkClass = `${dasherize(linkText)}-custom-header-links`;
+      const isActive = this.activeTab === linkText;
 
       const anchorAttributes = {
         title: linkTitle,
@@ -41,36 +38,35 @@ export default class CustomHeaderLinks extends Component {
       };
 
       result.push({
-        device: `headerLink--${device}`,
-        hideOnScroll: `headerLink--${hideOnScroll}`,
-        locale: locale ? `headerLink--${locale}` : null,
+        device: device ? `headerLink--${device}` : "",
+        hideOnScroll: hideOnScroll ? "headerLink--hide-on-scroll" : "",
+        locale: locale ? `headerLink--${locale}` : "",
         linkClass,
         anchorAttributes,
         linkText,
+        isActive
       });
 
       return result;
     }, []);
   }
-
+  
   @action
   toggleTab(tabName) {
     // If the tab is already active, deactivate it
     if (this.activeTab !== tabName) {
-      // Otherwise, set it as active
       this.activeTab = tabName;
-      // Show custom search only when Forum tab is NOT active
-      this.showCustomSearch = tabName !== "Forum";
     }
-    
-    // After toggling, manage the visibility of search bars
-    this._toggleSearchBars();
-    
     return false; // Prevent default link behavior
   }
   
   @action
-  searchHobbyDB() {
+  handleSearch() {
+    this.searchForum();
+  }
+  
+  @action
+  searchForum() {
     const searchInput = document.querySelector(".search-bar input");
     const searchValue = searchInput ? searchInput.value.trim() : "";
     
@@ -104,15 +100,25 @@ export default class CustomHeaderLinks extends Component {
             default:
               break;
           }
+
+          if(this.activeTab === 'Forum'){
+            if (this.search && typeof this.search.query === "function") {
+              this.search.query(searchValue);
+            } else {
+              // Fallback: Navigate to search page with the query
+              this.router.transitionTo("full-page-search", {
+                queryParams: { q: searchValue }
+              });
+            }
+            return;
+          }
           
           // Open in a new tab
-          if (hobbydbUrl) {
-            window.open(hobbydbUrl, '_blank', 'noopener,noreferrer');
-            
-            // Clear the search input after opening the new tab
-            if (searchInput) {
-              searchInput.value = '';
-            }
+          window.open(hobbydbUrl, 'self', 'noopener,noreferrer');
+          
+          // Clear the search input after opening the new tab
+          if (searchInput) {
+            searchInput.value = '';
           }
           
           // Return early to prevent default behavior
@@ -121,20 +127,34 @@ export default class CustomHeaderLinks extends Component {
           console.error("Error opening HobbyDB search:", error);
           // Fall through to default behavior if there's an error
         }
-      } 
+      }
+      
+      // No active tab or error occurred, use the original functionality
+      // Use Discourse's search service if available (preferred method)
+      if (this.search && typeof this.search.query === "function") {
+        this.search.query(searchValue);
+      } else {
+        // Fallback: Navigate to search page with the query
+        this.router.transitionTo("full-page-search", {
+          queryParams: { q: searchValue }
+        });
+      }
+    } else {
+      // If no search value, just navigate to search page
+      this.router.transitionTo("full-page-search");
     }
   }
-
-  // @action
-  // handleKeyPress(event) {
-  //   // Check if the Enter key was pressed
-  //   if (event.key === "Enter") {
-  //     // Prevent the default form submission behavior
-  //     event.preventDefault();
-  //     // Call the forum search function
-  //     this.searchForum();
-  //     return false;
-  //   }
-  //   return true;
-  // }
+  
+  @action
+  handleKeyPress(event) {
+    // Check if the Enter key was pressed
+    if (event.key === "Enter") {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+      // Call the forum search function
+      this.searchForum();
+      return false;
+    }
+    return true;
+  }
 }
