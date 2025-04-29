@@ -74,7 +74,6 @@ export default class CustomHeaderLinks extends Component {
     const searchInput = document.querySelector(".search-bar input");
     const searchValue = searchInput ? searchInput.value.trim() : "";
     
-    if (searchValue) {
       if (this.activeTab) {
         // When there's an active tab, open search in a new tab with specific URLs based on activeTab
         try {
@@ -104,18 +103,20 @@ export default class CustomHeaderLinks extends Component {
             default:
               break;
           }
+          
+          console.log("this.search",this.search, typeof this.search, typeof this.search.query, this.search.query)
 
-          if(this.activeTab === 'Forum'){
-            if (this.search && typeof this.search.query === "function") {
-              this.search.query(searchValue);
-            } else {
-              // Fallback: Navigate to search page with the query
-              this.router.transitionTo("full-page-search", {
-                queryParams: { q: searchValue }
-              });
-            }
-            return;
-          }
+          // if(this.activeTab === 'Forum'){
+          //   if (this.search && typeof this.search.query === "function") {
+          //     this.search.query(searchValue);
+          //   } else {
+          //     // Fallback: Navigate to search page with the query
+          //     this.router.transitionTo("full-page-search", {
+          //       queryParams: { q: searchValue }
+          //     });
+          //   }
+          //   return;
+          // }
           
           // Open in a new tab
           window.open(hobbydbUrl, 'self', 'noopener,noreferrer');
@@ -132,21 +133,6 @@ export default class CustomHeaderLinks extends Component {
           // Fall through to default behavior if there's an error
         }
       }
-      
-      // No active tab or error occurred, use the original functionality
-      // Use Discourse's search service if available (preferred method)
-      if (this.search && typeof this.search.query === "function") {
-        this.search.query(searchValue);
-      } else {
-        // Fallback: Navigate to search page with the query
-        this.router.transitionTo("full-page-search", {
-          queryParams: { q: searchValue }
-        });
-      }
-    } else {
-      // If no search value, just navigate to search page
-      this.router.transitionTo("full-page-search");
-    }
   }
   
   @action
