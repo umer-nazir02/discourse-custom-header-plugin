@@ -23,6 +23,7 @@ export default class CustomHeaderLinks extends Component {
     return settings.custom_header_links?.length > 0;
   }
 
+  
   get shouldShowSeachbar() {
     return this.activeTab !== 'Forum';
   }
